@@ -32,7 +32,7 @@ public class TabulatedFunctions {
     public static TabulatedFunction inputTabulatedFunction(InputStream in){
         try (DataInputStream stream = new DataInputStream(in)) {
             int pointsCount = stream.readInt();
-            FunctionPoint[] points = new FunctionPoint[pointsCount + 10];
+            FunctionPoint[] points = new FunctionPoint[pointsCount];
             for (int i = 0; i < pointsCount; ++i) {
                 points[i] = new FunctionPoint(stream.readDouble(), stream.readDouble());
             }
@@ -61,7 +61,7 @@ public class TabulatedFunctions {
             StreamTokenizer stream = new StreamTokenizer(in);
             stream.nextToken();
             int pointsCount = (int) stream.nval;
-            FunctionPoint[] points = new FunctionPoint[pointsCount + 10];
+            FunctionPoint[] points = new FunctionPoint[pointsCount];
             for (int i = 0; stream.nextToken() != StreamTokenizer.TT_EOF; i++) {
                 double x = stream.nval;
                 stream.nextToken();
