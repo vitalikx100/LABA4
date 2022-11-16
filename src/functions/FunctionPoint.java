@@ -1,9 +1,11 @@
 package functions;
 
-public class FunctionPoint {
+import java.io.Serializable;
+
+public class FunctionPoint implements Serializable {
     public double x,y;
 
-    public FunctionPoint(double x, double y){
+    public FunctionPoint(double x, double y) {
         this.x=x;
         this.y=y;
     }
