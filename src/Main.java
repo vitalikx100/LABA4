@@ -18,8 +18,18 @@ public class Main {
         }
         System.out.println();
 
-        Function tabSin = TabulatedFunctions.tabulate(funSin, 0, 2 * Math.PI, 10);
-        Function tabCos = TabulatedFunctions.tabulate(funCos, 0, 2 * Math.PI, 10);
+        Function tabSin = null;
+        try {
+            tabSin = TabulatedFunctions.tabulate(funSin, 0, 2 * Math.PI, 10);
+        } catch (InappropriateFunctionPointException e) {
+            throw new RuntimeException(e);
+        }
+        Function tabCos = null;
+        try {
+            tabCos = TabulatedFunctions.tabulate(funCos, 0, 2 * Math.PI, 10);
+        } catch (InappropriateFunctionPointException e) {
+            throw new RuntimeException(e);
+        }
 
         for(double i = 0; i <= (2 * Math.PI); i += 0.1){
             System.out.print("sin: " + tabSin.getFunctionValue(i) + " ");
@@ -28,8 +38,16 @@ public class Main {
         }
         System.out.println();
 
+        Function sin2 = Functions.Power(tabSin, 2);
+        Function cos2 = Functions.Power(tabCos, 2);
 
-     //123
+        Function sumFun = Functions.Sum(sin2, cos2);
+        for(double i = 0; i <= (2 * Math.PI); i += 0.1){
+            System.out.print("sin2 + cos2: " + sumFun.getFunctionValue(i));
+            System.out.println();
+        }
+
+
 
     }
 }

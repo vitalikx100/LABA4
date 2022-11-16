@@ -15,7 +15,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Function 
         head = new FunctionNode();
         head.next=head;
         head.prev=head;
-
+        this.NumberOfPoints=NumberOfPoints;
         for(int i=0; i<NumberOfPoints; i++){
             addPoint(new FunctionPoint(points[i].getX(), points[i].getY()));
         }

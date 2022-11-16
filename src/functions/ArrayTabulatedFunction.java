@@ -7,6 +7,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Function{
     public ArrayTabulatedFunction(FunctionPoint[] points, int NumberOfPoints) {
         if (points.length < 2) throw new IllegalArgumentException();
 
+        this.NumberOfPoints=NumberOfPoints;
         this.MassOfValues = new FunctionPoint[NumberOfPoints];
         for (int i = 0; i < NumberOfPoints; ++i) {
            MassOfValues[i]=points[i];
@@ -48,17 +49,20 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Function{
             return Double.NaN;
         }
 
-        int i = 0;
-        while (this.MassOfValues[i].getX() < x) i++;
+        for (int i = 0; i < getNumberOfPoints(); ++i) {
+            if (MassOfValues[i].getX() == x) {
+                return MassOfValues[i].getY();
+            }
+        }
+        if (getLeftDomainBorder() <= x && getRightDomainBorder() >= x) {
+            double leftY = getPointY(0);
+            double rightY = getPointY(getNumberOfPoints() - 1);
+            double k = (rightY - leftY) / (getRightDomainBorder() - getLeftDomainBorder()) ;
+            double b = rightY - k * getRightDomainBorder();
+            return k * x + b;
+        }
 
-        double x1, x2, y1, y2;
-        x1 = this.MassOfValues[i - 1].getX();
-        x2 = this.MassOfValues[i].getX();
-        y1 = this.MassOfValues[i - 1].getY();
-        y2 = this.MassOfValues[i].getY();
-        double k = (y2 - y1) / (x2 - x1);
-        double b = y1 - k * x1;
-        return k * x + b;
+        return Double.NaN;
     }
 
     public int getNumberOfPoints() {
